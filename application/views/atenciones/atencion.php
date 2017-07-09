@@ -7,11 +7,14 @@
             <?= form_open('atenciones/guardar')?>
             <div class="form-group">
                 <?= form_label('Fecha Atencion','fecha_atencion')?>
-                <?php if($action=='view'): ?>
-                <?= form_input(array('name'=>'fecha_atencion','type'=>'text','class'=>'form-control')) ?>
-                <?php else: ?>
-                <??>
-                <?php endif; ?>
+                <?= form_input(array('name'=>'fecha_atencion','type'=>'text','class'=>'form-control','id'=>'fecha_atencion'))?>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#fecha_atencion').datetimepicker({
+                            locale: 'es'
+                        });
+                    });
+                </script>
             </div>
             <div class="form-group">
                 <?= form_label('Nombre de Cliente','cliente')?>

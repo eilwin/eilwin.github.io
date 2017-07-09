@@ -28,7 +28,7 @@ class Atenciones extends CI_Controller{
         if ($action=='add'){
             $this->load->view('fragments/header');
             $this->load->view('atenciones/atencion',array('accion'=>'Agregar'));
-            $this->load->view('fragments.footer');
+            $this->load->view('fragments/footer');
         }
         if ($action=='view' || $action=='edit') {
             $data = $this->atencion->getAtencion($id)->result();
