@@ -39,7 +39,7 @@ class Login extends CI_Controller{
             }
             else {
                 $this->load->view('fragments/header');
-                $this->load->view('login',array('error'=>'Contrase;a invalida'));
+                $this->load->view('login',array('error'=>'Contraseña invalida'));
                 $this->load->view('fragments/footer');
             }
         }
@@ -58,6 +58,6 @@ class Login extends CI_Controller{
         $this->load->view('fragments/footer');
          * 
          */
-        $this->index();
+        redirect('');
     }
 }

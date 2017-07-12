@@ -45,7 +45,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="#">Ver Clientes</a></li>
                                 <li><a href="#">Buscar Cliente</a></li>
-                                <li><a href="#">Agregar Cliente</a></li>
+                                <li><a href="<?= base_url()?>clientes/cliente/add">Agregar Cliente</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
