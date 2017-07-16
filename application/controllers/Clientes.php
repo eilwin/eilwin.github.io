@@ -8,47 +8,63 @@ class Clientes extends CI_Controller{
     }
     
     public function index(){
-        if ($this->session->permisos != 'Cliente') {
-            $data = $this->atencion->getTAtenciones();
-            
-            $this->load->view('fragments/header');
-            $this->load->view('atenciones/atenciones',array('atenciones'=>$data->result()));
-            $this->load->view('fragments/footer');
-        }
-        else {
-            $data = $this->atencion->getAtenciones($this->session->rut);
-            
-            $this->load->view('fragments/header');
-            $this->load->view('atenciones/atenciones',array('atenciones'=>$data->result()));
-            $this->load->view('fragments/footer');
-        }
+        $data = $this->cliente->getTClientes();
+
+        $this->load->view('fragments/header');
+        $this->load->view('clientes/clientes',array('clientes'=>$data->result()));
+        $this->load->view('fragments/footer');
     }
     
-    public function cliente($action='',$id=''){
+    public function cliente($action='',$id='',$error=''){
         if ($action=='add'){
             $this->load->view('fragments/header');
-            $this->load->view('clientes/cliente',array('accion'=>'Agregar'));
+            $this->load->view('clientes/cliente',array('accion'=>'Agregar','action'=>'add','error'=>$error));
             $this->load->view('fragments/footer');
         }
         if ($action=='view' || $action=='edit') {
             $data = $this->cliente->getCliente($rut)->result();
-            ($accion=='view')?'Ver':'Editar';
-            $atencion = array(
-                'fecha_atencion'=> $data[0]->fecha_atencion,
-                'cliente'       => $data[0]->cliente,
-                'abogado'       => $data[0]->abogado,
-                'estado'        => $data[0]->estado,
-                'id'            => $id,
-                'action'        => $action,
-                'accion'        => $accion
+            if($action=='view'){
+                $accion = 'Ver';
+            } else {
+                $accion = 'Editar';
+            }
+            $cliente = array(
+                'rut'                   => $data[0]->rut,
+                'nombre'                => $data[0]->nombre,
+                'fecha_incorporacion'   => $data[0]->fecha_incorporacion,
+                'tipo_persona'          => $data[0]->tipo_persona,
+                'direccion'             => $data[0]->direccion,
+                'telefono'              => $data[0]->telefono,
+                'accion'                => $accion,
+                'action'                => $action
             );
             $this->load->view('fragments/header');
-            $this->load->view('clientes/cliente',array('cliente'=>$atencion));
+            $this->load->view('clientes/cliente',array('cliente'=>$atencion,'error'=>$error));
             $this->load->view('fragments/footer');
         }
     }
     
     public function guardar(){
-        
+        $data = array(
+            'rut'                   => $this->input->post('rut'),
+            'nombre'                => $this->input->post('nombre'),
+            'fecha_incorporacion'   => $this->input->post('fecha_incorporacion'),
+            'tipo_persona'          => $this->input->post('tipo_persona'),
+            'direccion'             => $this->input->post('direccion'),
+            'telefono'              => $this->input->post('telefono')
+        );
+        if ($action=='add') {
+            
+            $data['username'] = $this->input->post('username');
+            $data['password'] = sha1($this->input->post('password'));
+            if(count($this->cliente->getCliente($data['rut'])->result())==0){
+                $this->cliente->setCliente($data);
+            } else {
+                
+            }
+        }
+        if ($action=='edit') {
+            $this->cliente->updateCliente($data);
+        }
     }
 }

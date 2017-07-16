@@ -1,36 +1,51 @@
 <?php
 
-class Atencion extends CI_Model{
+class Cliente extends CI_Model{
     
-    public function getTAtenciones(){
-        $this->db->select('a.id,a.fecha_atencion,b.nombre as nombre_abogado,a.estado');
-        $this->db->from('atencion a');
-        $this->db->join('abogado b','a.id_abogado=b.rut','left');
-        $this->db->join('cliente c','a.id_cliente=c.rut','left');
+    public function getTClientes(){
+        $this->db->select('*');
+        $this->db->from('cliente');
         return $this->db->get();
     }
     
-    public function getAtenciones($rut){
-        $this->db->select('a.id,a.fecha_atencion,b.nombre as nombre_abogado,a.estado');
-        $this->db->from('atencion a');
-        $this->db->join('abogado b','a.id_abogado=b.rut','left');
-        $this->db->where('a.id_cliente',$rut);
+    public function getCliente($rut){
+        $this->db->select('*');
+        $this->db->from('cliente');
+        $this->db->where('rut',$rut);
         return $this->db->get();
     }
     
-    public function getAtencion($id){
-        $this->db->select('a.id,a.fecha_atencion,b.nombre,a.estado');
-        $this->db->from('atencion a');
-        $this->db->join('abogado b','a.id_abogado=b.rut','left');
-        $this->db->where('a.id',$id);
-        return$this->db->get();
+    public function getClienteN(){
+        
+    }
+
+    public function setCliente($cliente){
+        $this->db->insert('cliente',$cliente);
     }
     
-    public function setAtencion($atencion){
+    public function updateCliente($rut,$data){
         
     }
     
-    public function updateAtencion($atencion){
-        
+    public $validate = array(
+        array('field'=>'rut','label'=>'RUT','rules'=>'trim|required','errors'=>array('required'=>'Indique su %s')),
+        array('field'=>'nombre','label'=>'Nombre','rules'=>'trim|required','errors'=>array('required'=>'Indique su %s')),
+        array('field'=>'fecha_incorporacion','label'=>'Fecha Incorporacion','rules'=>'trim|required','errors'=>array('required'=>'Indique su %s')),
+        array('field'=>'direccion','label'=>'Direccion','rules'=>'trim|required','errors'=>array('required'=>'Indique su %s')),
+        array('field'=>'telefono','label'=>'Telefono','rules'=>'trim|required','errors'=>array('required'=>'Indique su %s')),
+        array('field'=>'username','label'=>'Usuario','rules'=>'trim|required','errors'=>array('required'=>'Indique su %s')),
+        array('field'=>'password','label'=>'Contraseña','rules'=>'trim|required','errors'=>array('required'=>'Indique su %s'))
+    );
+    
+    public function validar($data){
+        if(!empty($this->validate)){
+            foreach ($data as $key=>$value){
+                $_POST[$key] = $value;
+            }
+            $this->form_validation->set_rules($this->validate);
+            return $this->form_validation->run();
+        } else {
+            return TRUE;
+        }
     }
 }
