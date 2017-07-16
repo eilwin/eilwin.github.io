@@ -32,7 +32,11 @@ class Atenciones extends CI_Controller{
         }
         if ($action=='view' || $action=='edit') {
             $data = $this->atencion->getAtencion($id)->result();
-            ($accion=='view')?'Ver':'Editar';
+            if($action=='view'){
+                $accion = 'Ver';
+            } else {
+                $accion = 'Editar';
+            }
             $atencion = array(
                 'fecha_atencion'=> $data[0]->fecha_atencion,
                 'cliente'       => $data[0]->cliente,
