@@ -22,7 +22,7 @@ class Clientes extends CI_Controller{
             $this->load->view('fragments/footer');
         }
         if ($action=='view' || $action=='edit') {
-            $data = $this->cliente->getCliente($rut)->result();
+            $data = $this->cliente->getCliente($id)->result();
             if($action=='view'){
                 $accion = 'Ver';
             } else {
@@ -34,12 +34,10 @@ class Clientes extends CI_Controller{
                 'fecha_incorporacion'   => $data[0]->fecha_incorporacion,
                 'tipo_persona'          => $data[0]->tipo_persona,
                 'direccion'             => $data[0]->direccion,
-                'telefono'              => $data[0]->telefono,
-                'accion'                => $accion,
-                'action'                => $action
+                'telefono'              => $data[0]->telefono
             );
             $this->load->view('fragments/header');
-            $this->load->view('clientes/cliente',array('cliente'=>$atencion,'error'=>$error));
+            $this->load->view('clientes/cliente',array('accion'=>$accion,'action'=>$action,'cliente'=>$cliente,'error'=>$error));
             $this->load->view('fragments/footer');
         }
     }

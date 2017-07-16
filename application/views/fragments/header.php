@@ -74,7 +74,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$_SESSION['nombre']?><span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Perfil</a></li>
+                                <li><a href="<?= base_url()?>clientes/cliente/view/<?=$_SESSION['rut']?>/">Perfil</a></li>
                                 <li><a href="<?= base_url()?>login/logout">Salir</a></li>
                             </ul>
                         </li>
