@@ -9,12 +9,6 @@ class Logger extends CI_Model{
         return $this->db->get();
     }
     
-    public function getClientes(){
-        $this->db->select("*");
-        $this->db->from("cliente");
-        return $this->db->get();
-    }
-    
     public function getPermisos($rut){
         $this->db->select('*');
         $this->db->from('permisos');
@@ -22,7 +16,8 @@ class Logger extends CI_Model{
         return $this->db->get();
     }
 
-    public function getAbogados(){
-        
+    public function validarLogin($user, $pass){
+        $data = $this->db->get_where('cliente',array('username'=>$user,'password'=>$pass));
+        return count($data->result())>0;
     }
 }
