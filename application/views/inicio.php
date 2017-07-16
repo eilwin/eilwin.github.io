@@ -1,4 +1,19 @@
 <div class="container">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+        <?php if(isset($error)):?>
+        <div class="alert alert-danger">
+            <?=$error?>
+        </div>
+        <?php endif;?>
+        <?php if(isset($msg)):?>
+        <div class="alert alert-success">
+            <?=$msg?>
+        </div>
+        <?php endif;?>
+        <?=sha1('1234')?>
+    </div>
+    <div class="col-sm-3"></div>
     <div class="modal fade" id="mdlLogin" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">

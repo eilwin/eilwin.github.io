@@ -17,6 +17,7 @@ class Login extends CI_Controller{
         $username = $this->input->post('username');
         $password = sha1($this->input->post('password'));
         if($this->logger->validarLogin($username,$password)){
+            $cliente = $this->logger->getCliente($username)->result();
             $arr = array(
                 'rut'                   => $cliente[0]->rut,
                 'nombre'                => $cliente[0]->nombre,
@@ -31,7 +32,7 @@ class Login extends CI_Controller{
             $this->session->set_userdata('permisos',$permisos[0]->permiso);
 
             $this->load->view('fragments/header');
-            $this->load->view('inicio');
+            $this->load->view('inicio',array('msg'=>'Inicio de Sesion exitoso'));
             $this->load->view('fragments/footer');
         }
         else{
