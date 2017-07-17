@@ -15,15 +15,18 @@ class Cliente extends CI_Model{
         return $this->db->get();
     }
     
-    public function getClienteN(){
-        
+    public function getClienteN($opcion,$palabra){
+        $this->db->select('*');
+        $this->db->from('cliente');
+        $this->db->like($opcion,$palabra);
+        return $this->db->get();
     }
 
     public function setCliente($cliente){
         $this->db->insert('cliente',$cliente);
     }
     
-    public function updateCliente($rut,$data){
+    public function updateCliente($data){
         
     }
     
@@ -47,5 +50,17 @@ class Cliente extends CI_Model{
         } else {
             return TRUE;
         }
+    }
+    
+    public function calcularDV($rut){
+        $suma = 0;
+        $factores = array(2,3,4,5,6,7,2,3);
+        for($i= strlen($rut)-1,$f=0;$i>=0;$i--,$f++){
+            $suma += ($rut[$i]*$factores[$f]);
+        }
+        $dv = 11-($suma%11);
+        if($dv == 11){$dv = 0;}
+        if($dv == 10){$dv = 'K';}
+        return $dv;
     }
 }

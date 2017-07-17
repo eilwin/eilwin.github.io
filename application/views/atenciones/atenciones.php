@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <h2>Atenciones</h2>
+        <h3>Atenciones</h3>
     </div>
     <div class="row">
         <?php if(count($atenciones)>0): ?>
