@@ -51,10 +51,10 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Abogados<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?= base_url()?>abogados">Ver Abogados</a></li>
-                                <li><a href="#">Buscar Abogado</a></li>
+                                <li><a href="<?= base_url()?>abogados/ver">Ver Abogados</a></li>
+                                <li><a href="<?= base_url()?>abogados/buscar">Buscar Abogado</a></li>
                                 <?php if($_SESSION['permisos']=='Administrador'): ?>
-                                <li><a href="#">Agregar Abogado</a></li>
+                                <li><a href="<?= base_url()?>abogados/abogado/add">Agregar Abogado</a></li>
                                 <?php endif; ?>
                             </ul>
                         </li>

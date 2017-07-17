@@ -1,10 +1,10 @@
 <?php
 
-class Clientes extends CI_Controller{
+class Abogados extends CI_Controller{
     
     public function __construct() {
         parent::__construct();
-        $this->load->model('cliente');
+        $this->load->model('abogado');
     }
     
     public function cliente($action='',$rut='',$error='',$data=''){
@@ -79,14 +79,14 @@ class Clientes extends CI_Controller{
     }
     
     public function ver(){
-        $data = $this->cliente->getTClientes()->result();
+        $data = $this->abogado->getTAbogados()->result();
         $dv = array();
         $i=0;
-        foreach ($data as $cliente){
-            array_push($dv,$this->cliente->calcularDV($cliente->rut));
+        foreach ($data as $abogado){
+            array_push($dv,$this->abogado->calcularDV($abogado->rut));
         };
         $this->load->view('fragments/header');
-        $this->load->view('clientes/clientes',array('clientes'=>$data,'dig'=>$dv));
+        $this->load->view('abogados/abogados',array('abogados'=>$data,'dig'=>$dv));
         $this->load->view('fragments/footer');
     }
     
@@ -97,10 +97,10 @@ class Clientes extends CI_Controller{
         $msg = '';
         $dig = array();
         if(strlen($palabra)>0){
-            $data = $this->cliente->getClienteN($opcion,$palabra)->result();
+            $data = $this->abogado->getAbogadoN($opcion,$palabra)->result();
             if(count($data)>0){
-                foreach ($data as $cliente){
-                    array_push($dig,$this->cliente->calcularDV($cliente->rut));
+                foreach ($data as $abogado){
+                    array_push($dig,$this->abogado->calcularDV($abogado->rut));
                 };
                 $msg = 'success';
             }else{
@@ -108,12 +108,13 @@ class Clientes extends CI_Controller{
             }
         }
         $arr = array(
-            'clientes'  => $data,
+            'abogados'  => $data,
             'dv'        => $dig,
             'msg'       => $msg
         );
         $this->load->view('fragments/header');
-        $this->load->view('clientes/buscar',$arr);
+        $this->load->view('abogados/buscar',$arr);
         $this->load->view('fragments/footer');
     }
 }
+

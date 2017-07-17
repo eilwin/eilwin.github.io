@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <h2>Abogados</h2>
+        <h3>Vista de Abogados</h3>
     </div>
     <div class="row">
         <div class="col-sm-12">
@@ -9,28 +9,27 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>RUT</th><th>Nombre</th><th>Fecha de Contratacion</th><th>Especialidad</th><th>Valor Hora</th>
+                            <th>RUT</th><th>Nombre</th><th>Fecha Contratacion</th><th>Especialidad</th><th>Valor Hora</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($abogados as $abogado): ?>
+                        <?php $f=0;foreach ($abogados as $abogado): ?>
                         <tr>
-                            <td><?=$rut?></td>
-                            <td><?=$nombre?></td>
-                            <td><?=$fecha_contratacion?></td>
-                            <td><?=$especialidad?></td>
-                            <td><?=$valor?></td>
-                            <?php if($_SESSION['permisos']=='Administrador'): ?>
-                            <td><a></a></td>
-                            <td><a></a></td>
-                            <?php endif; ?>
+                            <td><?=$abogado->rut?>-<?=$dig[$f++]?></td>
+                            <td><?=$abogado->nombre?></td>
+                            <td><?=$abogado->fecha_contratacion?></td>
+                            <td><?=$abogado->especialidad?></td>
+                            <td><?=$abogado->valor_hora?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-            <?php else: ?>
-            <h5>No existen abogados registrados</h5>
+            <h5>Total de Abogados registrados: <?=$f?></h5>
+            <?php else:?>
+            <div>
+                <h5>No existen Abogados registrados</h5>
+            </div>
             <?php endif; ?>
         </div>
     </div>
