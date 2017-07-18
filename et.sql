@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `fecha_incorporacion` DATETIME NOT NULL,
   `tipo_persona` varchar(100) NOT NULL,
   `direccion` varchar(100) NOT NULL,
-  `telefono` int(11) NOT NULL,
+  `telefono` int(8) NOT NULL,
   `username` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

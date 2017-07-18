@@ -63,7 +63,7 @@ class Clientes extends CI_Controller{
                     $this->cliente->setCliente($data);
                     $this->cliente->setPermiso(array('id_cliente'=>$data['rut'],'permiso'=> $this->input->post('permiso')));
                     $this->load->view('fragments/header');
-                    $this->load->view('inicio',array('msg'=>'Cliente agregado exitosamente '.$data["fecha_incorporacion"]));
+                    $this->load->view('inicio',array('msg'=>'Cliente agregado exitosamente'));
                     $this->load->view('fragments/footer');
                 } else {
                     $this->cliente($action,$data['rut'],'RUT ya registrado en el sistema',$data);

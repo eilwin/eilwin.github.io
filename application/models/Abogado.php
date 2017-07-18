@@ -26,8 +26,13 @@ class Abogado extends CI_Model{
         $this->db->insert('abogado',$abogado);
     }
     
-    public function updateAbogado($data){
-        
+    public function updateAbogado($rut,$data){
+        $this->db->update('abogado',$data,array('rut'=>$rut));
+    }
+    
+    public function deleteAbogado($rut){
+        $this->db->delete('abogado',array('rut'=>$rut));
+        $this->db->delete('atencion',array('id_abogado'=>$rut));
     }
     
     public $validate = array(

@@ -37,6 +37,7 @@ class Cliente extends CI_Model{
     public function deleteCliente($rut){
         $this->db->delete('cliente',array('rut'=>$rut));
         $this->db->delete('permisos',array('id_cliente'=>$rut));
+        $this->db->delete('atencion',array('id_cliente'=>$rut));
     }
     
     public $validate = array(

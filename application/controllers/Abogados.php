@@ -7,78 +7,70 @@ class Abogados extends CI_Controller{
         $this->load->model('abogado');
     }
     
-    public function cliente($action='',$rut='',$error='',$data=''){
+    public function abogado($action='',$rut='',$error='',$data=''){
         if ($action=='add'){
             $this->load->view('fragments/header');
-            $this->load->view('clientes/cliente',array('accion'=>'Agregar','action'=>'add','error'=>$error,'cliente'=>$data));
+            $this->load->view('abogados/abogado',array('accion'=>'Agregar','action'=>'add','error'=>$error,'abogado'=>$data));
             $this->load->view('fragments/footer');
         }
         if ($action=='view' || $action=='edit') {
-            $data = $this->cliente->getCliente($rut)->result();
-            $this->load->model('logger');
-            $permisos = $this->logger->getPermisos($rut)->result();
+            $data = $this->abogado->getAbogado($rut)->result();
             if($action=='view'){
                 $accion = 'Ver';
             } else {
                 $accion = 'Editar';
             }
-            $cliente = array(
+            $abogado = array(
                 'rut'                   => $data[0]->rut,
-                'dv'                    => $this->cliente->calcularDV($data[0]->rut),
+                'dv'                    => $this->abogado->calcularDV($data[0]->rut),
                 'nombre'                => $data[0]->nombre,
-                'fecha_incorporacion'   => $data[0]->fecha_incorporacion,
-                'tipo_persona'          => $data[0]->tipo_persona,
-                'direccion'             => $data[0]->direccion,
-                'telefono'              => $data[0]->telefono,
-                'username'              => $data[0]->username,
-                'permiso'               => $permisos[0]->permiso
+                'fecha_contratacion'    => $data[0]->fecha_contratacion,
+                'especialidad'          => $data[0]->especialidad,
+                'valor_hora'            => $data[0]->valor_hora
             );
             $this->load->view('fragments/header');
-            $this->load->view('clientes/cliente',array('accion'=>$accion,'action'=>$action,'cliente'=>$cliente,'error'=>$error));
+            $this->load->view('abogados/abogado',array('accion'=>$accion,'action'=>$action,'abogado'=>$abogado,'error'=>$error));
             $this->load->view('fragments/footer');
         }
     }
     
     public function guardar(){
         $action = $this->input->post('action');
+        $fecha = DateTime::createFromFormat('d/m/Y H:i',$this->input->post('fecha_contratacion'));
+        $fecha_contratacion = date_format($fecha,'Y-m-d H:i');
         $data = array(
             'rut'                   => $this->input->post('rut'),
             'dv'                    => $this->input->post('dv'),
             'nombre'                => $this->input->post('nombre'),
-            'fecha_incorporacion'   => $this->input->post('fecha_incorporacion'),
-            'tipo_persona'          => $this->input->post('tipo_persona'),
-            'direccion'             => $this->input->post('direccion'),
-            'telefono'              => $this->input->post('telefono'),
-            'username'              => $this->input->post('username')
+            'fecha_contratacion'    => $fecha_contratacion,
+            'especialidad'          => $this->input->post('especialidad'),
+            'valor_hora'            => $this->input->post('valor_hora')
         );
         if ($action=='add') {
             $dv = $data['dv'];
             if($dv=='k'){$dv='K';}
-            if($dv == $this->cliente->calcularDV($data['rut'])){
-                $data['password'] = sha1($this->input->post('password'));
-                if(count($this->cliente->getCliente($data['rut'])->result())==0){
+            if($dv == $this->abogado->calcularDV($data['rut'])){
+                if(count($this->abogado->getAbogado($data['rut'])->result())==0){
                     unset($data['dv']);
-                    $this->cliente->setCliente($data);
+                    $this->abogado->setAbogado($data);
                     $this->load->view('fragments/header');
-                    $this->load->view('inicio',array('msg'=>'Cliente agregado exitosamente'));
+                    $this->load->view('inicio',array('msg'=>'Abogado agregado exitosamente'));
                     $this->load->view('fragments/footer');
                 } else {
-                    $this->cliente($action,$data['rut'],'RUT ya registrado en el sistema',$data);
+                    $this->abogado($action,$data['rut'],'RUT ya registrado en el sistema',$data);
                 }
             }else{
-                $this->cliente($action,$data['rut'],'Digito verificador invalido',$data);
+                $this->abogado($action,$data['rut'],'Digito verificador invalido',$data);
             }
         }
         if ($action=='edit') {
             unset($data['dv']);
-            $this->cliente->updateCliente($data);
-            $this->load->view('fragments/header');
-            $this->load->view('inicio',array('msg'=>'Cambios guardados exitosamente'));
-            $this->load->view('fragments/footer');
+            $this->abogado->updateAbogado($data['rut'],$data);
+            $this->ver('Abogado actualizado correctamente');
         }
     }
     
-    public function ver(){
+    public function ver($msg=''){
         $data = $this->abogado->getTAbogados()->result();
         $dv = array();
         $i=0;
@@ -86,7 +78,7 @@ class Abogados extends CI_Controller{
             array_push($dv,$this->abogado->calcularDV($abogado->rut));
         };
         $this->load->view('fragments/header');
-        $this->load->view('abogados/abogados',array('abogados'=>$data,'dig'=>$dv));
+        $this->load->view('abogados/abogados',array('abogados'=>$data,'dig'=>$dv,'msg'=>$msg));
         $this->load->view('fragments/footer');
     }
     
@@ -101,7 +93,7 @@ class Abogados extends CI_Controller{
             if(count($data)>0){
                 foreach ($data as $abogado){
                     array_push($dig,$this->abogado->calcularDV($abogado->rut));
-                };
+                }
                 $msg = 'success';
             }else{
                 $msg = 'failed';
@@ -116,5 +108,9 @@ class Abogados extends CI_Controller{
         $this->load->view('abogados/buscar',$arr);
         $this->load->view('fragments/footer');
     }
+    
+    public function borrar($rut = ''){
+        $this->cliente->deleteAbogado($rut);
+        $this->ver('Abogado eliminado satisfactoriamente');
+    }
 }
-
