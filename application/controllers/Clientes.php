@@ -41,11 +41,13 @@ class Clientes extends CI_Controller{
     
     public function guardar(){
         $action = $this->input->post('action');
+        $fecha = DateTime::createFromFormat('d/m/Y H:i',$this->input->post('fecha_incorporacion'));
+        $fecha_incorporacion = date_format($fecha,'Y-m-d H:i');
         $data = array(
             'rut'                   => $this->input->post('rut'),
             'dv'                    => $this->input->post('dv'),
             'nombre'                => $this->input->post('nombre'),
-            'fecha_incorporacion'   => $this->input->post('fecha_incorporacion'),
+            'fecha_incorporacion'   => $fecha_incorporacion,
             'tipo_persona'          => $this->input->post('tipo_persona'),
             'direccion'             => $this->input->post('direccion'),
             'telefono'              => $this->input->post('telefono'),
@@ -59,8 +61,9 @@ class Clientes extends CI_Controller{
                 if(count($this->cliente->getCliente($data['rut'])->result())==0){
                     unset($data['dv']);
                     $this->cliente->setCliente($data);
+                    $this->cliente->setPermiso(array('id_cliente'=>$data['rut'],'permiso'=> $this->input->post('permiso')));
                     $this->load->view('fragments/header');
-                    $this->load->view('inicio',array('msg'=>'Cliente agregado exitosamente'));
+                    $this->load->view('inicio',array('msg'=>'Cliente agregado exitosamente '.$data["fecha_incorporacion"]));
                     $this->load->view('fragments/footer');
                 } else {
                     $this->cliente($action,$data['rut'],'RUT ya registrado en el sistema',$data);

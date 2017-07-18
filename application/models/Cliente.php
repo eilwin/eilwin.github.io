@@ -26,6 +26,10 @@ class Cliente extends CI_Model{
         $this->db->insert('cliente',$cliente);
     }
     
+    public function setPermiso($permiso){
+        $this->db->insert('permisos',$permiso);
+    }
+    
     public function updateCliente($data){
         
     }

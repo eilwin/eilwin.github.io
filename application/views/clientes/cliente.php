@@ -25,10 +25,10 @@
             </div>
             <div class="form-group">
                 <?= form_label('Fecha Incorporacion','fecha_incorporacion')?>
-                <?= form_input(array('name'=>'fecha_incorporacion','type'=>'text','class'=>'form-control','id'=>'fecha_incorporacion','value'=>(isset($cliente['fecha_incorporacion'])?$cliente['fecha_incorporacion']:'')))?>
+                <?= form_input(array('name'=>'fecha_incorporacion','type'=>'text','class'=>'form-control','id'=>'fecha','value'=>(isset($cliente['fecha_incorporacion'])?$cliente['fecha_incorporacion']:'')))?>
                 <script type="text/javascript">
                     $(function () {
-                        $('#fecha_incorporacion').datetimepicker({
+                        $('#fecha').datetimepicker({
                             locale: 'es',
                             minDate: new Date()
                         });

@@ -21,7 +21,7 @@ USE `et`;
 CREATE TABLE IF NOT EXISTS `cliente` (
   `rut` int(8) NOT NULL,
   `nombre` varchar(100) NOT NULL,
-  `fecha_incorporacion` DATE NOT NULL,
+  `fecha_incorporacion` DATETIME NOT NULL,
   `tipo_persona` varchar(100) NOT NULL,
   `direccion` varchar(100) NOT NULL,
   `telefono` int(11) NOT NULL,
@@ -32,14 +32,14 @@ CREATE TABLE IF NOT EXISTS `cliente` (
 CREATE TABLE IF NOT EXISTS `abogado` (
   `rut` int(8) NOT NULL,
   `nombre` varchar(100) NOT NULL,
-  `fecha_contratacion` DATE NOT NULL,
+  `fecha_contratacion` DATETIME NOT NULL,
   `especialidad` varchar(100) NOT NULL,
   `valor_hora` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `atencion` (
   `id` int(11) NOT NULL,
-  `fecha_atencion` DATE NOT NULL,
+  `fecha_atencion` DATETIME NOT NULL,
   `id_cliente` int(8) NOT NULL,
   `id_abogado` int(8) NOT NULL,
   `estado` varchar(11) NOT NULL
