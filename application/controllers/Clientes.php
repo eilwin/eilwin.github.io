@@ -81,7 +81,7 @@ class Clientes extends CI_Controller{
         }
     }
     
-    public function ver(){
+    public function ver($msg=''){
         $data = $this->cliente->getTClientes()->result();
         $dv = array();
         $i=0;
@@ -89,7 +89,7 @@ class Clientes extends CI_Controller{
             array_push($dv,$this->cliente->calcularDV($cliente->rut));
         };
         $this->load->view('fragments/header');
-        $this->load->view('clientes/clientes',array('clientes'=>$data,'dig'=>$dv));
+        $this->load->view('clientes/clientes',array('clientes'=>$data,'dig'=>$dv,'msg'=>$msg));
         $this->load->view('fragments/footer');
     }
     
@@ -104,7 +104,7 @@ class Clientes extends CI_Controller{
             if(count($data)>0){
                 foreach ($data as $cliente){
                     array_push($dig,$this->cliente->calcularDV($cliente->rut));
-                };
+                }
                 $msg = 'success';
             }else{
                 $msg = 'failed';
@@ -118,5 +118,10 @@ class Clientes extends CI_Controller{
         $this->load->view('fragments/header');
         $this->load->view('clientes/buscar',$arr);
         $this->load->view('fragments/footer');
+    }
+    
+    public function borrar($rut = ''){
+        $this->cliente->deleteCliente($rut);
+        $this->ver('Cliente eliminado satisfactoriamente');
     }
 }

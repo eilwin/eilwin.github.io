@@ -11,7 +11,6 @@
             <?=$msg?>
         </div>
         <?php endif;?>
-        <?=sha1('1234')?>
     </div>
     <div class="col-sm-3"></div>
     <div class="modal fade" id="mdlLogin" tabindex="-1">
