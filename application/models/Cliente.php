@@ -30,8 +30,8 @@ class Cliente extends CI_Model{
         $this->db->insert('permisos',$permiso);
     }
     
-    public function updateCliente($data){
-        
+    public function updateCliente($rut,$data){
+        $this->db->update('cliente',$data,array('rut'=>$rut));
     }
     
     public function deleteCliente($rut){
