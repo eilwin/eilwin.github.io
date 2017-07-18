@@ -34,7 +34,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand">Buffet</a>
+                    <a class="navbar-brand">Duralex bufete</a>
                 </div>
                 <div class="navbar-collapse collapse" id="navopc">
                     <?php if(isset($_SESSION['username'])): ?>
