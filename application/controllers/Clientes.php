@@ -75,9 +75,7 @@ class Clientes extends CI_Controller{
         if ($action=='edit') {
             unset($data['dv']);
             $this->cliente->updateCliente($data['rut'],$data);
-            $this->load->view('fragments/header');
-            $this->load->view('inicio',array('msg'=>'Cambios guardados exitosamente'));
-            $this->load->view('fragments/footer');
+            $this->ver('Cliente actualizado correctamente');
         }
     }
     
