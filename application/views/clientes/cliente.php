@@ -25,12 +25,17 @@
             </div>
             <div class="form-group">
                 <?= form_label('Fecha Incorporacion','fecha_incorporacion')?>
-                <?= form_input(array('name'=>'fecha_incorporacion','type'=>'text','class'=>'form-control','id'=>'fecha','value'=>(isset($cliente['fecha_incorporacion'])?$cliente['fecha_incorporacion']:'')))?>
+                <div class="input-group date" id="fecha">
+                    <?= form_input(array('name'=>'fecha_incorporacion','type'=>'text','class'=>'form-control'))?>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
                 <script type="text/javascript">
                     $(function () {
                         $('#fecha').datetimepicker({
                             locale: 'es',
-                            minDate: new Date()
+                            defaultDate: new Date('<?=(isset($cliente['fecha_incorporacion'])?$cliente['fecha_incorporacion']:date('Y-m-d H:i'))?>')
                         });
                     });
                 </script>
