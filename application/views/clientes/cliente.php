@@ -75,8 +75,8 @@
             </div>
             <?php endif; ?>
             <div class="form-group">
-                <?= form_button(array('type'=>'reset'),'Restablecer')?>
-                <?= form_button(array('type'=>'submit'),'Guardar')?>
+                <?= form_button(array('type'=>'reset','class'=>'btn btn-default'),'Restablecer')?>
+                <?= form_button(array('type'=>'submit','class'=>'btn btn-primary'),'Guardar')?>
             </div>
             <?= form_close()?>
         </div>

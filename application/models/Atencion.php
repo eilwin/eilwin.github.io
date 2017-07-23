@@ -11,10 +11,9 @@ class Atencion extends CI_Model{
     }
     
     public function getAtenciones($rut){
-        $this->db->select('a.id,a.fecha_atencion,b.nombre as nombre_abogado,a.estado');
-        $this->db->from('atencion a');
-        $this->db->join('abogado b','a.id_abogado=b.rut','left');
-        $this->db->where('a.id_cliente',$rut);
+        $this->db->select('*');
+        $this->db->from('atencion');
+        $this->db->where('id_cliente',$rut);
         return $this->db->get();
     }
     
@@ -23,14 +22,35 @@ class Atencion extends CI_Model{
         $this->db->from('atencion a');
         $this->db->join('abogado b','a.id_abogado=b.rut','left');
         $this->db->where('a.id',$id);
-        return$this->db->get();
+        return $this->db->get();
+    }
+    
+    public function getAtFecha($inicio,$termino){
+        $this->db->select('a.fecha_atencion,c.nombre as nombre_cliente,b.nombre as nombre_abogado,a.estado');
+        $this->db->from('atencion a');
+        $this->db->join('cliente c','c.rut = a.id_cliente');
+        $this->db->join('abogado b','b.rut = a.id_abogado');
+        $this->db->where("a.fecha_atencion BETWEEN $inicio AND $termino");
+        return $this->db->get();
     }
     
     public function setAtencion($atencion){
-        
+        $this->db->insert('atencion',$atencion);
     }
     
-    public function updateAtencion($atencion){
-        
+    public function updateAtencion($id,$atencion){
+        $this->db->update('atencion',$atencion,array('id'=>$id));
+    }
+    
+    public function getClientes(){
+        $this->db->select('rut,nombre');
+        $this->db->from('cliente');
+        return $this->db->get();
+    }
+    
+    public function getAbogados(){
+        $this->db->select('rut,nombre');
+        $this->db->from('abogado');
+        return $this->db->get();
     }
 }

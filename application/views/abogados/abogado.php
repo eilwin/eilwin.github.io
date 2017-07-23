@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <h3><?=$accion?> Cliente</h3>
+        <h3><?=$accion?> Abogado</h3>
     </div>
     <div class="row">
         <div class="col-sm-6">
@@ -41,42 +41,16 @@
                 </script>
             </div>
             <div class="form-group">
-                <?= form_label('Tipo Persona','tipo_persona')?>
-                <?= form_dropdown('tipo_persona',array('Natural'=>'Natural','Juridica'=>'Juridica'),(isset($cliente['tipo_persona']))?$cliente['tipo_persona']:'',array('class'=>'form-control'))?>
+                <?= form_label('Especialidad','especialidad')?>
+                <?= form_input(array('name'=>'especialidad','type'=>'text','class'=>'form-control','value'=>(isset($abogado['especialidad']))?$abogado['especialidad']:''))?>
             </div>
             <div class="form-group">
-                <?= form_label('Direccion','direccion')?>
-                <?= form_input(array('name'=>'direccion','type'=>'text','class'=>'form-control','value'=>(isset($cliente['direccion']))?$cliente['direccion']:''))?>
+                <?= form_label('Valor Hora','valor_hora')?>
+                <?= form_input(array('name'=>'valor_hora','type'=>'text','class'=>'form-control','value'=>(isset($abogado['valor_hora'])?$abogado['valor_hora']:'')))?>
             </div>
             <div class="form-group">
-                <?= form_label('Telefono','telefono')?>
-                <div class="form-inline">
-                    (+56) 9
-                    <?= form_input(array('name'=>'telefono','type'=>'text','class'=>'form-control','minlength'=>'8','maxlength'=>'8','value'=>(isset($cliente['telefono'])?$cliente['telefono']:'')))?>
-                </div>
-            </div>
-            <?php if($_SESSION['permisos']=='Administrador'): ?>
-            <div class="form-group">
-                <?= form_label('Usuario','username')?>
-                <?= form_input(array('name'=>'username','type'=>'text','class'=>'form-control','value'=>(isset($cliente['username'])?$cliente['username']:'')))?>
-            </div>
-            <div class="form-group">
-                <?= form_label('Contraseña','password')?>
-                <?= form_input(array('name'=>'password','type'=>'password','class'=>'form-control'))?>
-            </div>
-            <div class="form-group">
-                <?= form_label('Permisos','permiso')?>
-                <?= form_dropdown('permiso',array('Cliente'=>'Cliente','Secretaria'=>'Secretaria','Administrador'=>'Administrador','Gerente'=>'Gerente'),(isset($cliente['permiso'])?$cliente['permiso']:''),array('class'=>'form-control'))?>
-            </div>
-            <?php endif; ?>
-            <?php if($_SESSION['permisos']=='Cliente'): ?>
-            <div class="form-group">
-                <?= form_input(array('name'=>'permisos','type'=>'text','class'=>'form-control'))?>
-            </div>
-            <?php endif; ?>
-            <div class="form-group">
-                <?= form_button(array('type'=>'reset'),'Restablecer')?>
-                <?= form_button(array('type'=>'submit'),'Guardar')?>
+                <?= form_button(array('type'=>'reset','class'=>'btn btn-default'),'Restablecer')?>
+                <?= form_button(array('type'=>'submit','class'=>'btn btn-primary'),'Guardar')?>
             </div>
             <?= form_close()?>
         </div>

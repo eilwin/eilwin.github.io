@@ -47,4 +47,10 @@ class Login extends CI_Controller{
         
         redirect('');
     }
+    
+    public function error(){
+        $this->load->view('fragments/header');
+        $this->load->view('inicio',array('error'=>'No tienes los permisos suficientes para realizar esta accion'));
+        $this->load->view('fragments/footer');
+    }
 }

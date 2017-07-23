@@ -62,8 +62,8 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Atenciones<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?= base_url()?>atenciones">Ver Atenciones</a></li>
-                                <li><a href="#">Buscar Atencion</a></li>
+                                <li><a href="<?= base_url()?>atenciones/ver">Ver Atenciones</a></li>
+                                <li><a href="<?= base_url()?>atenciones/buscar">Buscar Atencion</a></li>
                                 <li><a href="<?= base_url()?>atenciones/atencion/add">Agregar Atencion</a></li>
                             </ul>
                         </li>
