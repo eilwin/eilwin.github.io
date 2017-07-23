@@ -54,13 +54,13 @@ class Atenciones extends CI_Controller{
                     $data = $this->atencion->getAtencion($id)->result();
                     $atencion = array(
                         'fecha_atencion'=> $data[0]->fecha_atencion,
-                        'id_cliente'    => $data[0]->cliente,
-                        'id_abogado'    => $data[0]->abogado,
+                        'id_cliente'    => $data[0]->id_cliente,
+                        'id_abogado'    => $data[0]->id_abogado,
                         'estado'        => $data[0]->estado,
                         'id'            => $id
                     );
                     $this->load->view('fragments/header');
-                    $this->load->view('atenciones/atencion',array('acction'=>'Editar','action'=>$action,'atencion'=>$atencion,'clientes'=>$clientes,'abogados'=>$abogados));
+                    $this->load->view('atenciones/atencion',array('accion'=>'Editar','action'=>$action,'atencion'=>$atencion,'clientes'=>$clientes,'abogados'=>$abogados));
                     $this->load->view('fragments/footer');
                 }
             }
@@ -74,7 +74,6 @@ class Atenciones extends CI_Controller{
         $fecha = DateTime::createFromFormat('d/m/Y H:i',$this->input->post('fecha_atencion'));
         $fecha_atencion = date_format($fecha,'Y-m-d H:i');
         $data = array(
-            'id'                => $this->input->post('id'),
             'fecha_atencion'    => $fecha_atencion,
             'id_cliente'        => $this->input->post('id_cliente'),
             'id_abogado'        => $this->input->post('id_abogado'),
@@ -87,6 +86,7 @@ class Atenciones extends CI_Controller{
             $this->load->view('fragments/footer');
         }
         if ($action == 'edit') {
+            $data['id'] = $this->input->post('id');
             $this->atencion->updateAtencion($data['id'],$data);
             $this->ver('Atencion actualizada correctamente');
         }
@@ -120,7 +120,7 @@ class Atenciones extends CI_Controller{
                 );
             }
             if($opcion == 'fecha_atencion'){
-
+                
             }
             $this->load->view('fragments/header');
             $this->load->view('atenciones/buscar',$arr);
@@ -128,5 +128,10 @@ class Atenciones extends CI_Controller{
         } else{
             redirect('login/error');
         }
+    }
+    
+    public function borrar($id = ''){
+        $this->atencion->deleteAtencion($id);
+        $this->ver('Atencion eliminada satisfactoriamente');
     }
 }

@@ -10,6 +10,8 @@
             </div>
             <?php endif; ?>
             <?= form_open('atenciones/guardar')?>
+            <?= form_input(array('type'=>'hidden','name'=>'action','value'=>$action))?>
+            <?= form_input(array('type'=>'hidden','name'=>'id','value'=>(isset($atencion['id'])?$atencion['id']:'')))?>
             <div class="form-group">
                 <?= form_label('Fecha Atencion','fecha_atencion')?>
                 <?= form_input(array('name'=>'fecha_atencion','type'=>'text','class'=>'form-control','id'=>'fecha'))?>
@@ -24,15 +26,15 @@
             </div>
             <div class="form-group">
                 <?= form_label('Nombre de Cliente','id_cliente')?>
-                <?= form_dropdown('id_cliente',$clientes,(isset($atencion['id_cliente'])?$clientes[$atencion['id_cliente']]:''),array('class'=>'form-control')) ?>
+                <?= form_dropdown('id_cliente',$clientes,(isset($atencion['id_cliente'])?$atencion['id_cliente']:''),array('class'=>'form-control')) ?>
             </div>
             <div class="form-group">
                 <?= form_label('Nombre de Abogado','id_abogado')?>
-                <?= form_dropdown('id_abogado',$abogados,(isset($atencion['id_abogado'])?$abogados[$atencion['id_abogado']]:''),array('class'=>'form-control'))?>
+                <?= form_dropdown('id_abogado',$abogados,(isset($atencion['id_abogado'])?$atencion['id_abogado']:''),array('class'=>'form-control'))?>
             </div>
             <div class="form-group">
                 <?= form_label('Estado','estado')?>
-                <?= form_dropdown('nombre',array('agendada'=>'agendada','confirmada'=>'confirmada','anulada'=>'anulada','perdida'=>'perdida','realizada'=>'realizada'),($action=='edit')?$estado:'',array('class'=>'form-control'))?>
+                <?= form_dropdown('estado',array('agendada'=>'Agendada','confirmada'=>'Confirmada','anulada'=>'Anulada','perdida'=>'Perdida','realizada'=>'Realizada'),($action=='edit')?$atencion['estado']:'',array('class'=>'form-control'))?>
             </div>
             <div>
                 <?= form_button(array('type'=>'reset','class'=>'btn btn-default'),'Restablecer')?>
@@ -42,11 +44,3 @@
         </div>
     </div>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded',function(){
-        if(document.getElementById("action").value === "view"){
-            $('#form input').attr('readonly',true);
-            $('#form select').attr('disabled',true);
-        }
-    },false);
-</script>
