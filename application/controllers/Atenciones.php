@@ -70,25 +70,29 @@ class Atenciones extends CI_Controller{
     }
     
     public function guardar(){
-        $action = $this->input->post('action');
-        $fecha = DateTime::createFromFormat('d/m/Y H:i',$this->input->post('fecha_atencion'));
-        $fecha_atencion = date_format($fecha,'Y-m-d H:i');
-        $data = array(
-            'fecha_atencion'    => $fecha_atencion,
-            'id_cliente'        => $this->input->post('id_cliente'),
-            'id_abogado'        => $this->input->post('id_abogado'),
-            'estado'            => $this->input->post('estado')
-        );
-        if ($action == 'add') {
-            $this->atencion->setAtencion($data);
-            $this->load->view('fragments/header');
-            $this->load->view('inicio',array('msg'=>'Atencion agregada exitosamente'));
-            $this->load->view('fragments/footer');
-        }
-        if ($action == 'edit') {
-            $data['id'] = $this->input->post('id');
-            $this->atencion->updateAtencion($data['id'],$data);
-            $this->ver('Atencion actualizada correctamente');
+        if ($this->session->permisos == 'Secretaria'){
+            $action = $this->input->post('action');
+            $fecha = DateTime::createFromFormat('d/m/Y H:i',$this->input->post('fecha_atencion'));
+            $fecha_atencion = date_format($fecha,'Y-m-d H:i');
+            $data = array(
+                'fecha_atencion'    => $fecha_atencion,
+                'id_cliente'        => $this->input->post('id_cliente'),
+                'id_abogado'        => $this->input->post('id_abogado'),
+                'estado'            => $this->input->post('estado')
+            );
+            if ($action == 'add') {
+                $this->atencion->setAtencion($data);
+                $this->load->view('fragments/header');
+                $this->load->view('inicio',array('msg'=>'Atencion agregada exitosamente'));
+                $this->load->view('fragments/footer');
+            }
+            if ($action == 'edit') {
+                $data['id'] = $this->input->post('id');
+                $this->atencion->updateAtencion($data['id'],$data);
+                $this->ver('Atencion actualizada correctamente');
+            }
+        } else{
+            redirect('login/error');
         }
     }
     

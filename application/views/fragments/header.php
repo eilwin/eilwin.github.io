@@ -37,15 +37,17 @@
                     <a class="navbar-brand">Duralex bufete</a>
                 </div>
                 <div class="navbar-collapse collapse" id="navopc">
-                    <?php if(isset($_SESSION['username'])): ?>
+                    <?php if(isset($_SESSION['username']) && isset($_SESSION['permisos'])): ?>
                     <ul class="nav navbar-nav">
-                        <?php if(isset($_SESSION['permisos']) && $_SESSION['permisos']!='Cliente'): ?>
+                        <?php if($_SESSION['permisos']!='Cliente'): ?>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clientes<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?= base_url()?>clientes/ver">Ver Clientes</a></li>
                                 <li><a href="<?= base_url()?>clientes/buscar">Buscar Cliente</a></li>
+                                <?php if($_SESSION['permisos']=='Administrador'): ?>
                                 <li><a href="<?= base_url()?>clientes/cliente/add">Agregar Cliente</a></li>
+                                <?php endif; ?>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -63,10 +65,17 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Atenciones<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?= base_url()?>atenciones/ver">Ver Atenciones</a></li>
+                                <?php if($_SESSION['permisos']=='Secretaria' || $_SESSION['permisos']=='Gerente'): ?>
                                 <li><a href="<?= base_url()?>atenciones/buscar">Buscar Atencion</a></li>
+                                <?php if($_SESSION['permisos']=='Secretaria'): ?>
                                 <li><a href="<?= base_url()?>atenciones/atencion/add">Agregar Atencion</a></li>
+                                <?php endif; ?>
+                                <?php endif; ?>
                             </ul>
                         </li>
+                        
+                        <li><a href="<?= base_url()?>sistema/estadisticas">Estadisticas del Sistema</a></li>
+                        
                     </ul>
                     <?php endif; ?>
                     <ul class="nav navbar-nav navbar-right">
