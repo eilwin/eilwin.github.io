@@ -25,12 +25,37 @@ class Atencion extends CI_Model{
         return $this->db->get();
     }
     
+    public function getAtencionN($opcion,$palabra){
+        $this->db->select('a.id,a.fecha_atencion,c.nombre as nombre_cliente,b.nombre as nombre_abogado,a.estado');
+        $this->db->from('atencion a');
+        $this->db->join('abogado b','a.id_abogado=b.rut');
+        $this->db->join('cliente c','a.id_cliente=c.rut');
+        $this->db->where($opcion,$palabra);
+        return $this->db->get();
+    }
+    
+    public function getRutCliente($nombre){
+        $this->db->select('rut');
+        $this->db->from('cliente');
+        $this->db->like('nombre',$nombre);
+        return $this->db->get();
+    }
+    
+    public function getRutAbogado($nombre){
+        $this->db->select('rut');
+        $this->db->from('abogado');
+        $this->db->like('nombre',$nombre);
+        return $this->db->get();
+    }
+    
     public function getAtFecha($inicio,$termino){
         $this->db->select('a.fecha_atencion,c.nombre as nombre_cliente,b.nombre as nombre_abogado,a.estado');
         $this->db->from('atencion a');
         $this->db->join('cliente c','c.rut = a.id_cliente');
         $this->db->join('abogado b','b.rut = a.id_abogado');
-        $this->db->where("a.fecha_atencion BETWEEN $inicio AND $termino");
+        //$this->db->where("a.fecha_atencion BETWEEN $inicio AND $termino",null,false);
+        $this->db->where('a.fecha_atencion >=',$inicio);
+        $this->db->where('a.fecha_atencion <=',$termino);
         return $this->db->get();
     }
     

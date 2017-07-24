@@ -96,34 +96,35 @@ class Atenciones extends CI_Controller{
         if($this->session->permisos == 'Secretaria'){
             $opcion = $this->input->post('opcion');
             $palabra = $this->input->post('palabra');
-            $fechaInicio = $this->input->post('fechaDesde');
-            $fechaFin = $this->input->post('fechaHasta');
             $data = '';
             $msg = '';
-            $dig = array();
             if($opcion == 'cliente' || $opcion == 'abogado'){
                 if(strlen($palabra)>0){
-                    $data = $this->atencion->getAtencionN($opcion,$palabra)->result();
+                    $rut = '';
+                    if($opcion == 'cliente'){$rut = $this->atencion->getRutCliente($palabra)->result();}
+                    else{$rut = $this->atencion->getRutAbogado($palabra)->result(); }
+                    $data = $this->atencion->getAtencionN(($opcion=='cliente'?'id_cliente':'id_abogado'),$rut[0]->rut)->result();
                     if(count($data)>0){
-                        foreach ($data as $cliente){
-                            array_push($dig,$this->cliente->calcularDV($cliente->rut));
-                        }
                         $msg = 'success';
                     }else{
                         $msg = 'failed';
                     }
                 }
-                $arr = array(
-                    'clientes'  => $data,
-                    'dv'        => $dig,
-                    'msg'       => $msg
-                );
             }
             if($opcion == 'fecha_atencion'){
-                
+                $fecha = DateTime::createFromFormat('d/m/Y H:i',$this->input->post('fechaDesde'));
+                $fechaInicio = date_format($fecha,'Y-m-d H:i');
+                $fecha = DateTime::createFromFormat('d/m/Y H:i',$this->input->post('fechaHasta'));
+                $fechaFin = date_format($fecha,'Y-m-d H:i');
+                $data = $this->atencion->getAtFecha($fechaInicio,$fechaFin)->result();
+                if(count($data)>0){
+                    $msg = 'success';
+                }else{
+                    $msg = 'failed';
+                }
             }
             $this->load->view('fragments/header');
-            $this->load->view('atenciones/buscar',$arr);
+            $this->load->view('atenciones/buscar',array('atenciones'=>$data,'msg'=>$msg));
             $this->load->view('fragments/footer');
         } else{
             redirect('login/error');

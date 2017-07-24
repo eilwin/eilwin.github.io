@@ -14,10 +14,13 @@
             }
         }
         $(function(){
-            $('#fechaDesde').datetimepicker();
+            $('#fechaDesde').datetimepicker({
+                useCurrent: false,
+                locale: 'es'
+            });
             $('#fechaHasta').datetimepicker({
                 useCurrent: false,
-                locale: es
+                locale: 'es'
             });
             $('#fechaDesde').on("dp.change", function (e){
                 $('#fechaHasta').data("DateTimePicker").minDate(e.date);
@@ -40,10 +43,16 @@
                     </div>
                     <div id="divFechas" style="display: none">
                         <div class="col-sm-6">
-                            <?= form_input(array('class'=>'form-control','id'=>'fechaDesde','name'=>'fechaDesde'))?>
+                            <div class="form-group">
+                                <span class="input-group-addon">Desde</span>
+                                <?= form_input(array('class'=>'form-control','id'=>'fechaDesde','name'=>'fechaDesde'))?>
+                            </div>
                         </div>
                         <div class="col-sm-6">
-                            <?= form_input(array('class'=>'form-control','id'=>'fechaHasta','name'=>'fechaHasta'))?>
+                            <div>
+                                <span class="input-group-addon">Hasta</span>
+                                <?= form_input(array('class'=>'form-control','id'=>'fechaHasta','name'=>'fechaHasta'))?>
+                            </div>
                         </div>
                     </div>
                     <span class="input-group-btn">
@@ -61,32 +70,30 @@
     <div class="row">
         <div class="col-sm-12">
             <div>
-                <?php if(count($clientes)>0): ?>
+            <?php if(count($atenciones)>0): ?>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>RUT</th><th>Nombre</th><th>Fecha Incorporacion</th><th>Tipo Persona</th><th>Direccion</th><th>Telefono</th>
+                            <th>Fecha Atencion</th><th>Cliente</th><th>Abogado</th><th>Estado</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $f=0;foreach ($clientes as $cliente): ?>
+                        <?php $f=0;foreach ($atenciones as $atencion): $f++;?>
                         <tr>
-                            <td><?=$cliente->rut?>-<?=$dv[$f++]?></td>
-                            <td><?=$cliente->nombre?></td>
-                            <td><?=$cliente->fecha_incorporacion?></td>
-                            <td><?=$cliente->tipo_persona?></td>
-                            <td><?=$cliente->direccion?></td>
-                            <td>(+56) 9 <?=$cliente->telefono?></td>
+                            <td><?=$atencion->fecha_atencion?></td>
+                            <td><?=$atencion->nombre_cliente?></td>
+                            <td><?=$atencion->nombre_abogado?></td>
+                            <td><?=$atencion->estado?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-            <h5>Total de Clientes encontrados: <?=$f?></h5>
+            <h5>Total de Atenciones encontradas: <?=$f?></h5>
             <?php else:?>
             <div>
-                <h5>No se han encontrado Clientes</h5>
+                <h5>No se han encontrado Atenciones</h5>
             </div>
             <?php endif; ?>
             </div>
