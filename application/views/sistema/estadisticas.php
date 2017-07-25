@@ -1,36 +1,80 @@
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript"> 
-     
-    // Load the Visualization API and the piechart package. 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']}); 
-       
-    // Set a callback to run when the Google Visualization API is loaded. 
-    google.charts.setOnLoadCallback(drawChart); 
-       
-    function drawChart() { 
-      var jsonData = $.ajax({ 
-          url: "<?=base_url()?>sistema/getData", 
-          dataType: "json", 
-          async: false 
-          }).responseText; 
-           
-      // Create our data table out of JSON data loaded from server. 
-      var data = new google.visualization.DataTable(jsonData); 
- 
-      // Instantiate and draw our chart, passing in some options. 
-      var chart = new google.visualization.PieChart(document.getElementById('chart_div')); 
-      chart.draw(data, {width:600,height:450,title: 'Cantidad de Clientes segun Tipo Persona'}); 
-    } 
- 
-    </script>
-
-    <!--Div that will hold the pie chart--> 
-    <!--<h1 style="text-align:center">Quantity of fruits we have in our store - Displayed by Google Chart and Codeigniter with MySQL</h1>-->
+    google.charts.setOnLoadCallback(clienteTipo);
+    google.charts.setOnLoadCallback(clienteAtencion);
     
+    function clienteTipo() { 
+        var jsonData = $.ajax({ 
+            url: "<?=base_url()?>sistema/getClienteTipo", 
+            dataType: "json", 
+            async: false 
+        }).responseText; 
+        var data = new google.visualization.DataTable(jsonData); 
+        var chart = new google.visualization.PieChart(document.getElementById('clienteTipo')); 
+        chart.draw(data, {width:600,height:450,title: 'Cantidad de Clientes segun Tipo Persona'});
+    }
+    
+    function clienteAtencion() {
+        var jsonData = $.ajax({ 
+            url: "<?=base_url()?>sistema/getClienteAtencion", 
+            dataType: "json", 
+            async: false 
+        }).responseText; 
+        var data = new google.visualization.DataTable(jsonData); 
+        var chart = new google.visualization.ColumnChart(document.getElementById('clienteAtencion')); 
+        chart.draw(data, {width:600,height:450,title: 'Cantidad de Atenciones segun Cliente'}); 
+    }
+
+</script>
+
+<div class="container">
     <div class="row">
-        <div id="chart_div" class="col-sm-6"></div>
+        <h3>Estadisticas del Sistema</h3>
+    </div>
+    <div class="row">
+        <div id="clienteTipo" class="col-sm-6"></div>
         <div class="col-sm-6">
-            Aca van los datos de la tabla
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Tipo Persona</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($clienteTipo as $tipo): ?>
+                    <tr>
+                        <td><?=$tipo['nombre']?></td>
+                        <td><?=$tipo['cantidad']?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
+    <div class="row">
+        <div id="clienteAtencion" class="col-sm-6"></div>
+        <div class="col-sm-6">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($clienteAtencion as $tipo): ?>
+                    <tr>
+                        <td><?=$tipo['nombre']?></td>
+                        <td><?=$tipo['cantidad']?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    
+</div>
     
